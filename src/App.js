@@ -3,7 +3,7 @@ import './App.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
-import { CardContent, Typography, CardActions, IconButton, Collapse } from '@material-ui/core';
+import { CardContent, Typography, CardActions, IconButton, Collapse, Chip, AppBar } from '@material-ui/core';
 
 
 class App extends Component {
@@ -20,6 +20,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
+    this.handleChipClick = this.handleChipClick.bind(this);
   }
 
 
@@ -52,30 +53,39 @@ class App extends Component {
         this.setState({
           loading: false,
           results: [ 
+
           <Card style={{minWidth: 275}}>
             <CardContent>
-             
+              <div className="row">
+              <div className="col-sm-4">
+                <img src={data.Poster} />
+              </div>  
+              <div className="col-sm-8">
                 <h3>Title</h3>{data.Title}
                 <h3>Actors</h3><span> {data.Actors}</span>
                 <h3>Directors</h3><span>{data.Director}</span> 
                 <h3>Box Office Collection</h3> <span>{data.BoxOffice}</span>
                 <h3>Genre</h3><span> {data.Genre}</span>
                 <h3>Runtime</h3><span> {data.Runtime}</span>
-
-
+              </div>  
+              </div>
             </CardContent>
-          
-        
           </Card>
 
           ]
         });
       })
+    //console.log(this.state.history);
+    //history: [...this.state.history, data.t+',']
 
-    this.setState({
-      history: this.state.query
-    })  
+        this.setState({
+         history: [...this.state.history, <Chip variant ="outlined" onClick={this.handleChipClick} color="primary" label ={data.t}/>]
+      });
+    //console.log(this.state.history);
 
+  }
+  componentDidMount(){
+    
   }
 
   handleChange(event){
@@ -92,6 +102,14 @@ class App extends Component {
     })
   }
 
+  handleChipClick(event){
+
+    //console.log(event.target.label.value)
+    this.setState({
+      query: event.target.label
+    });
+  }
+
 
   render() {
     const text = this.state.loading ? 'Search for a movie' : this.state.results;
@@ -101,19 +119,25 @@ class App extends Component {
     return (
   
       <div className="App">
+      <AppBar color="primary" position="static">
+        <Typography variant="h6" color="inherit">
+          OMDb API
+        </Typography>
+      </AppBar>
+
       <h2>Enter a search query!</h2>
 
       <TextField label ='Search for a movie' margin = 'normal' type = "text" value ={this.state.query} onChange = {this.handleChange} />
       <br></br>
       <br></br>
-       <Button variant ="contained" color = "primary" margin = 'normal' name ='querymovie' id ="search-box" onClick = {this.handleClick}> Search</Button>
-       <Button variant ="contained" color = "secondary" margin = 'normal' onClick ={this.handleReset}>Reset</Button>
+       <Button variant ="contained" color = "primary"  name ='querymovie' id ="search-box" onClick = {this.handleClick}> Search</Button>
+       <Button variant ="contained" color = "secondary"  onClick ={this.handleReset}>Reset</Button>
        <br></br>
        <br></br>
       {text}
       <DisplayComponent value = {this.state.text} />  
-
-      {history.length>0 &&  <h4> You last queried for {this.state.history}</h4>}
+      <br></br>
+      {history.length>0 &&  <h4> Previous Queries <div>{this.state.history}<br></br></div></h4>}
       
       </div>
     );
