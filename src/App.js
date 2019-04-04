@@ -85,29 +85,7 @@ class App extends Component {
       console.log(data);
       this.setState({
         loading: !this.state.loading,
-        /*results: [
-          <div>
-          {data.Episodes.map(episode => episode.imdbRating > 9.0) && <div>
-          <h4>Title</h4><span>{data.Title}</span>
-          <h4>Season</h4><span>{data.Season}</span>
-          <h4>Episodes</h4><span>{data.Episodes.map(episode => 
-          <Card style={{minWidth: 275}}>
-          <CardContent>
-            <h4>Episode: </h4>{episode.Episode}<br></br>
-            <h4>Title: </h4>{episode.Title}<br></br>
-            <h4>Release Date: </h4>{episode.Released}<br></br>
-            <h4>Imdb Rating:  <div>{episode.imdbRating}</div></h4><br></br>
-          </CardContent>  
-          </Card>
-            )}
-            
-            </span>
-          </div>
-        }
-        </div>
-        ]*/
-
-      results : [
+        results : [
 
           <div>
           <h4>{data.Title}</h4> 
@@ -242,21 +220,7 @@ class App extends Component {
   }
 }
 
-//want to add two search options 
-//one form for movie and other for tv series
 
-
-class DisplayComponent extends React.Component{
-  render(){
-    const text = this.props.value
-
-    return(
-      <div>
-        {text}
-      </div>
-    );
-  }
-}
 
 
 export default App;
